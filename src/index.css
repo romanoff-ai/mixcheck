@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  background-color: #0a0a0a;
+  color: #f1f5f9;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+/* Score gauge animation */
+@keyframes fillGauge {
+  from { width: 0%; }
+  to { width: var(--gauge-width); }
+}
+
+.gauge-fill {
+  animation: fillGauge 0.8s ease-out forwards;
+}
+
+/* Pulse for score */
+@keyframes pulse-once {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.score-pulse {
+  animation: pulse-once 0.5s ease-out;
+}
+
+/* Star rating */
+.star-btn:hover ~ .star-btn { color: #374151; }
+.stars:hover .star-btn:hover,
+.stars:hover .star-btn:hover ~ .star-btn ~ .star-btn ~ .star-btn ~ .star-btn {
+  color: #374151;
+}
