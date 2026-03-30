@@ -7,7 +7,7 @@ import { INGREDIENTS_DB } from '../data/ingredients';
 export function calculatePairing(selectedKeys) {
   if (selectedKeys.length < 2) return null;
 
-  const ingredients = selectedKeys.map(k => ({ key: k, ...INGREDIENTS_DB[k] })).filter(Boolean);
+  const ingredients = selectedKeys.filter(k => INGREDIENTS_DB[k]).map(k => ({ key: k, ...INGREDIENTS_DB[k] }));
   if (ingredients.length < 2) return null;
 
   let score = 50; // base score
@@ -216,6 +216,12 @@ export function suggestSpec(ingredients) {
   mixers.forEach(k => {
     const isCarbonated = INGREDIENTS_DB[k]?.subcategory === 'carbonated';
     spec.push({ key: k, amount: isCarbonated ? 3 : 1, unit: isCarbonated ? 'oz (top)' : 'oz', role: 'mixer' });
+  });
+
+  // Fruits (muddled / juice)
+  const fruits = ingredients.filter(i => INGREDIENTS_DB[i]?.category === 'fruit');
+  fruits.forEach(k => {
+    spec.push({ key: k, amount: 0.75, unit: 'oz', role: 'fruit' });
   });
 
   // Garnishes

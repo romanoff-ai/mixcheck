@@ -24,17 +24,11 @@ export default function BuildTab({ initialIngredients = [], initialName = '', on
   const [showSearch, setShowSearch] = useState(false)
   const [method, setMethod] = useState('shaken')
 
-  // Generate spec whenever ingredients change
-  useEffect(() => {
-    if (selectedIngredients.length > 0) {
-      const generated = suggestSpec(selectedIngredients)
-      setSpec(generated)
-    }
-  }, [selectedIngredients])
-
+  // Generate spec only from initial ingredients (not on every change)
   useEffect(() => {
     if (initialIngredients?.length > 0) {
       setSelectedIngredients(initialIngredients)
+      setSpec(suggestSpec(initialIngredients))
     }
   }, [initialIngredients])
 
@@ -50,17 +44,19 @@ export default function BuildTab({ initialIngredients = [], initialName = '', on
     setSpec(prev => [...prev, { key: '', amount: 1, unit: 'oz', role: 'ingredient' }])
   }
 
-  const filtered = ALL_INGREDIENT_KEYS.filter(k => {
+  const filtered = search.trim() ? ALL_INGREDIENT_KEYS.filter(k => {
     const q = search.toLowerCase()
     return !selectedIngredients.includes(k) && (
       k.includes(q) ||
       getDisplayName(k).toLowerCase().includes(q) ||
       (INGREDIENTS_DB[k]?.category || '').includes(q)
     )
-  }).slice(0, 10)
+  }).slice(0, 10) : []
 
   const addToSpec = (key) => {
     setSelectedIngredients(prev => [...prev, key])
+    const newLines = suggestSpec([key])
+    setSpec(prev => [...prev, ...newLines])
     setSearch('')
     setShowSearch(false)
   }
@@ -92,6 +88,7 @@ export default function BuildTab({ initialIngredients = [], initialName = '', on
     citrus: '#f59e0b',
     sweetener: '#10b981',
     herb: '#6ee7b7',
+    fruit: '#34d399',
     accent: '#f87171',
     mixer: '#60a5fa',
     garnish: '#a78bfa',

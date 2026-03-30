@@ -1313,10 +1313,26 @@ export const INGREDIENTS_DB = {
   "dehydrated_citrus": {
     category: "garnish", subcategory: "citrus",
     flavors: ["concentrated_citrus", "slightly_bitter", "aromatic"],
-    pairs_well: ["gin_london_dry", "vodka", "tequila_blanco", "rum_white", "most_spirits"],
+    pairs_well: ["gin_london_dry", "vodka", "tequila_blanco", "rum_white"],
     pairs_ok: [],
     clashes: [],
     taste_profile: { citrus: 9, bitter: 3, sweet: 2 }
+  },
+  "kiwi": {
+    category: "fruit", subcategory: "tropical",
+    flavors: ["tart", "sweet", "tropical", "green"],
+    pairs_well: ["vodka", "rum_white", "lime", "mint", "strawberry", "pineapple", "coconut", "simple_syrup"],
+    pairs_ok: ["gin_london_dry", "lemon", "elderflower_liqueur", "midori"],
+    clashes: [],
+    taste_profile: { citrus: 5, sweet: 5, bitter: 1, tropical: 6, herbal: 1 }
+  },
+  "olive": {
+    category: "garnish", subcategory: "savory",
+    flavors: ["briny", "savory", "earthy", "salt"],
+    pairs_well: ["gin_london_dry", "vodka", "vermouth_dry"],
+    pairs_ok: ["tequila_blanco", "mezcal"],
+    clashes: ["simple_syrup", "cream", "honey"],
+    taste_profile: { citrus: 0, sweet: 0, bitter: 2, herbal: 1 }
   },
 };
 
